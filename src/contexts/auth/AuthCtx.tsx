@@ -6,14 +6,24 @@ import { firebase } from "@firebase/firebaseClient";
 interface AuthContextI {
   user: firebase.User | null;
   signOut: () => void;
+  signInModalOpen: boolean;
+  setSignInModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+const errorFxn = () => {
+  throw new Error("out of context");
+};
 
 const AuthContext = createContext<AuthContextI>({
   user: null,
+  signInModalOpen: false,
+  signOut: errorFxn,
+  setSignInModalOpen: errorFxn,
 });
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<firebase.User | null>(null);
+  const [signInModalOpen, setSignInModalOpen] = useState(false);
 
   useEffect(() => {
     return firebase.auth().onIdTokenChanged(async (user) => {
@@ -36,7 +46,9 @@ export const AuthProvider: React.FC = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, signOut }}>
+    <AuthContext.Provider
+      value={{ user, signOut, signInModalOpen, setSignInModalOpen }}
+    >
       {children}
     </AuthContext.Provider>
   );
