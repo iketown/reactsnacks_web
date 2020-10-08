@@ -1,24 +1,12 @@
-import React, { useState } from "react";
-import Link from "next/link";
 import { routes } from "@constants/routes";
-import {
-  Menu,
-  Sidebar,
-  SidebarPushable,
-  Container,
-  Segment,
-  Icon,
-  Button,
-  Header,
-  Image,
-  Grid,
-  Checkbox,
-} from "semantic-ui-react";
+import Link from "next/link";
+import React, { useState } from "react";
+import { Icon, Menu, Sidebar } from "semantic-ui-react";
 
 const NavBarSide: React.FC<{
   drawerOpen: boolean;
   setDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ drawerOpen, setDrawerOpen, children }) => {
+}> = ({ drawerOpen = false, setDrawerOpen, children }) => {
   const handleClose = () => setDrawerOpen(false);
   return (
     <Sidebar.Pushable>
@@ -34,7 +22,7 @@ const NavBarSide: React.FC<{
       >
         {routes.map((route) => {
           return (
-            <Link href="/" key={route.href}>
+            <Link href={route.href} key={route.href}>
               <Menu.Item as="a" onClick={handleClose}>
                 <Icon name={route.iconName} />
                 {route.display}
@@ -44,7 +32,7 @@ const NavBarSide: React.FC<{
         })}
       </Sidebar>
       <Sidebar.Pusher>
-        <div style={{ height: "100vh" }}>{children}</div>
+        <div style={{ height: "100vh", overflowY: "scroll" }}>{children}</div>
       </Sidebar.Pusher>
     </Sidebar.Pushable>
   );

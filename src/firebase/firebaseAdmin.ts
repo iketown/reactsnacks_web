@@ -1,13 +1,14 @@
 import * as firebaseAdmin from "firebase-admin";
-import admin_sdk from "../../admin_sdk.json";
+
 if (!firebaseAdmin.apps.length) {
+  const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
   firebaseAdmin.initializeApp({
     credential: firebaseAdmin.credential.cert({
-      privateKey: admin_sdk.private_key,
-      clientEmail: admin_sdk.client_email,
-      projectId: admin_sdk.project_id,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      projectId,
     }),
-    databaseURL: `https://${admin_sdk.project_id}.firebaseio.com`,
+    databaseURL: `https://${projectId}.firebaseio.com`,
   });
 }
 

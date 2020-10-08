@@ -1,32 +1,31 @@
-import useSWR from "swr";
-import Link from "next/link";
+import SnackList from "@components/Snacks/SnackList";
+import { getCategorizedPosts, getPostsList } from "lib/api";
+import { Container, Segment } from "semantic-ui-react";
 // import { useUser } from '../utils/auth/useUser'
-import { useAuth } from "@contexts/auth/AuthCtx";
-import { Button } from "semantic-ui-react";
-
-const Index = () => {
-  const { user, signOut } = useAuth();
-
-  if (!user) {
-    return (
-      <>
-        <p>Hi there!</p>
-        <p>
-          You are not signed in.{" "}
-          <Link href={"/auth"}>
-            <a>Sign in</a>
-          </Link>
-        </p>
-      </>
-    );
-  }
-  console.log("user", user);
+const Index: React.FC<{ categorizedPosts: PostCategory[] }> = ({
+  categorizedPosts,
+}) => {
+  // console.log({ categorizedPosts });
   return (
-    <div>
-      hey hi
-      <Button onClick={signOut}>sign out</Button>
-    </div>
+    <Container>
+      {categorizedPosts.map((catPosts) => {
+        return (
+          <div>
+            <h4>{catPosts.title}</h4>
+            <SnackList posts={catPosts.posts} />
+          </div>
+        );
+      })}
+    </Container>
   );
+};
+
+export const getStaticProps = async () => {
+  const allPosts = await getPostsList();
+  const categorizedPosts = await getCategorizedPosts();
+  return {
+    props: { allPosts, categorizedPosts },
+  };
 };
 
 export default Index;

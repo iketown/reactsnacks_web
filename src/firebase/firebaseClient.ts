@@ -4,7 +4,6 @@ import "firebase/firestore";
 
 let db = null;
 if (typeof window !== "undefined" && !firebase.apps.length) {
-  console.log("API KEY", process.env.FIREBASE_API_KEY);
   firebase.initializeApp({
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
     authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,

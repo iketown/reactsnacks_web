@@ -24,7 +24,7 @@ const NavBarTop: React.FC<{ openDrawer: () => void }> = ({ openDrawer }) => {
     <Segment inverted style={{ borderRadius: 0 }}>
       <NavContent>
         <div className="leftSide">
-          {screenSm && (
+          {(screenSm || screenMd) && (
             <Button onClick={openDrawer} icon basic circular inverted>
               <Icon name="bars" />
             </Button>
