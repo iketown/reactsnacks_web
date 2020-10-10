@@ -8,13 +8,10 @@ const ParentComponent = () => {
 };
 
 const ChildButtons = () => {
-  const handleClick = (color) => {
-    // somehow tell the parent about the color
-  };
   return (
     <div>
-      <button onClick={() => handleClick("BLUE")}>blue</button>
-      <button onClick={() => handleClick("RED")}>red</button>
+      <button>blue</button>
+      <button>red</button>
     </div>
   );
 };
@@ -30,14 +27,10 @@ const ParentComponent = () => {
 };
 
 const ChildButtons = (props) => {
-  const handleClick = (newColor) => {
-    props.setColor(newColor);
-  };
-
   return (
     <div>
-      <button onClick={() => handleClick("BLUE")}>blue</button>
-      <button onClick={() => handleClick("RED")}>red</button>
+      <button onClick={() => props.setColor("BLUE")}>blue</button>
+      <button onClick={() => props.setColor("RED")}>red</button>
     </div>
   );
 };

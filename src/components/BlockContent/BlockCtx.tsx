@@ -8,11 +8,15 @@ interface Highlight {
 interface BlockContextI {
   highlight: Highlight;
   setHighlight: React.Dispatch<React.SetStateAction<Highlight>>;
+  targetHighlight: string;
+  setTargetHighlight: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const BlockContext = createContext<BlockContextI>({
-  highlight: { start: -1, end: -1 },
+  highlight: { start: -1, end: -1, codeId: "" },
   setHighlight: () => {},
+  targetHighlight: "",
+  setTargetHighlight: () => {},
 });
 
 export const BlockContextProvider: React.FC = ({ children }) => {
@@ -21,9 +25,10 @@ export const BlockContextProvider: React.FC = ({ children }) => {
     end: -1,
     codeId: "",
   });
+  const [targetHighlight, setTargetHighlight] = useState<string>("target-1");
   return (
     <BlockContext.Provider
-      value={{ highlight, setHighlight }}
+      value={{ highlight, setHighlight, targetHighlight, setTargetHighlight }}
       {...{ children }}
     />
   );

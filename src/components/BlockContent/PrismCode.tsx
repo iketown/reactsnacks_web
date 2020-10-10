@@ -15,10 +15,7 @@ const PrismCode = ({ node }) => {
   if (!node?.code) return null;
   return (
     <div ref={codeRef} key={highlights.join(",")}>
-      <pre
-        data-line={`${highlights}`}
-        className="language-javascript line-numbers"
-      >
+      <pre className="language-javascript line-numbers">
         <code>{node.code.trim()}</code>
       </pre>
     </div>

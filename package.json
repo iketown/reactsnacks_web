@@ -21,6 +21,7 @@
     "js-cookie": "2.2.1",
     "next": "latest",
     "nookies": "2.4.0",
+    "prism-react-renderer": "1.1.1",
     "prismjs": "1.21.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

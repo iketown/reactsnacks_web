@@ -24,7 +24,7 @@ const SnackCard: React.FC<{ post: PostInfo }> = ({ post }) => {
           <Link href="/snacks/[snackId]" as={link}>
             <a>
               <h4>{post.title}</h4>
-              <Image src={post.image} />
+              <Image src={`${post.image}?h=200`} />
             </a>
           </Link>
           <Accordion panels={panels}></Accordion>
