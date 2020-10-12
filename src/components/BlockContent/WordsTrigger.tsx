@@ -16,12 +16,12 @@ const WordsTrigger = ({ children, mark }) => {
   };
 
   const handleTrigger = () => {
+    console.log({ prismId, extraPrismIds });
     if (prismId) {
       setHighlightWords([prismIdToObj(prismId)]);
       // return;
     }
     if (extraPrismIds && extraPrismIds.length) {
-      console.log({ extraPrismIds });
       setHighlightWords((old) => [
         ...old,
         ...extraPrismIds.map((id) => prismIdToObj(id)),
