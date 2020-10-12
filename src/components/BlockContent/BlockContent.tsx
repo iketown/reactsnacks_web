@@ -3,18 +3,13 @@ import React, { createContext } from "react";
 import styled from "styled-components";
 
 import { BlockContextProvider } from "./BlockCtx";
-import Code from "./Code";
-import WordsTrigger from "./WordsTrigger";
-import PrismRenderer from "./PrismRenderer";
-import InlineCode from "./InlineCode";
-import Target from "./Target";
-import TargetCode from "./TargetCode";
-import LineTrigger from "./LineTrigger";
-import Trigger from "./Trigger";
-import IDTrigger from "./IDTrigger";
 import CodeSandbox from "./CodeSandbox";
-import CodeTriggers from "./CodeTriggers";
-import PrismPre from "./PrismPre";
+import InlineCode from "./InlineCode";
+import LineTrigger from "./LineTrigger";
+import PrismRenderer from "./PrismRenderer";
+import TargetCode from "./TargetCode";
+import WordsTrigger from "./WordsTrigger";
+
 const StyledBlock = styled.div`
   p {
     font-size: 1.2rem;
@@ -25,53 +20,23 @@ const StyledBlock = styled.div`
   }
 `;
 
-const BlockRenderer = (props) => {
-  const { style = "normal" } = props.node;
-  if (style === "pre") {
-    console.log("pre", props);
-    return (
-      <PrismPre nodes={props.node.children} markDefs={props.node.markDefs} />
-    );
-  }
-
-  if (/^h\d/.test(style)) {
-    const level = style.replace(/[^\d]/g, "");
-    return React.createElement(
-      style,
-      { className: `heading-${level}` },
-      props.children
-    );
-  }
-
-  if (style === "blockquote") {
-    return <blockquote>- {props.children}</blockquote>;
-  }
-  // Fall back to default handling
-  return BlockContent.defaultSerializers.types.block(props);
-};
-
 const serializers = {
   marks: {
     inlineCode: InlineCode,
     lineTrigger: LineTrigger,
-    idTrigger: IDTrigger,
     wordsTrigger: WordsTrigger,
-    target: Target,
     targetCode: TargetCode,
     // code: () => <div>im code</div>,
   },
   types: {
     codeWithId: PrismRenderer,
-    codeWithTriggers: CodeTriggers,
     codeSandbox: CodeSandbox,
-    block: BlockRenderer,
   },
 };
 
 const ReactBlockContent = ({ body }) => {
   return (
     <BlockContextProvider>
-      {/* <CtxViewer /> */}
       <StyledBlock>
         <BlockContent blocks={body} serializers={serializers} />
       </StyledBlock>

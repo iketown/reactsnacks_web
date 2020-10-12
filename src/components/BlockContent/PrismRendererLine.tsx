@@ -83,7 +83,7 @@ const PrismRendererLine: React.FC<PrismLineI> = ({
   const lineHLEnd = lineHL && highlightLines.endLineNumber === lineNumber;
   return (
     <Line
-      key={lineIndex}
+      key={`${myBlockId}__${line}`}
       {...{
         lineHL,
         lineHLStart,
