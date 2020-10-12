@@ -4,9 +4,7 @@ const WordsTrigger = ({ children, mark }) => {
   const { setHighlightWords, highlightWords } = useBlockCtx();
   const { prismId, extraPrismIds } = mark;
   // console.log({ mark });
-  useEffect(() => {
-    console.log("highlightWords", highlightWords);
-  }, [highlightWords]);
+
   const prismIdToObj = (prismId: string) => {
     const [p, blockId, lineNumber, startWord, endWord] = prismId.split("__");
     return {

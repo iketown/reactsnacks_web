@@ -7,8 +7,8 @@ const Layout: React.FC = ({ children }) => {
 
   return (
     <NavBarSide {...{ drawerOpen, setDrawerOpen }}>
-      <SignInModal />
-      <NavBarTop openDrawer={() => setDrawerOpen(true)} />
+      {/* <SignInModal /> */}
+      {/* <NavBarTop openDrawer={() => setDrawerOpen(true)} /> */}
       {children}
     </NavBarSide>
   );
