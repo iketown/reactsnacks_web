@@ -1,9 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { firestore } from "../../lib/firebase";
 
-export default function (req: NextApiRequest, res: NextApiResponse) {
-  const {
-    query: { pid },
-  } = req;
-
-  res.status(200).json({ foo: "bar", goog: process.env.GCLOUD_CREDENTIALS });
-}
+export const allBooks = async (req: NextApiRequest, res: NextApiResponse) => {
+  firestore
+    .collection("books")
+    .get()
+    .then((docs) => {
+      const books = [];
+      docs.forEach((doc) => books.push(doc.data()));
+      res.json(books);
+    })
+    .catch((error) => res.json({ error }));
+};
