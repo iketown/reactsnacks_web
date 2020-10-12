@@ -17,7 +17,7 @@ const Line = styled.div<{
   border-bottom: ${(p) => (p.lineHLEnd ? borderStyle : "")};
   border-left: ${(p) => (p.lineHL ? borderStyle : "")};
   border-right: ${(p) => (p.lineHL ? borderStyle : "")};
-  transition: 0.2s all;
+  transition: 0.5s all;
 `;
 const LineNo = styled.span`
   /* display: table-cell; */

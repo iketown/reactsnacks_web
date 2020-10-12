@@ -4,6 +4,7 @@ import React from "react";
 import { Container, Grid, Divider } from "semantic-ui-react";
 import SnackMeta from "@components/Snacks/SnackMeta";
 import { motion } from "framer-motion";
+import BackendTestButton from "@components/BlogButtons/BackendTestButton";
 
 const SnackPage = ({ post }) => {
   const { _updatedAt, author, prerequisites } = post;
@@ -25,6 +26,7 @@ const SnackPage = ({ post }) => {
       </Grid>
       <Divider />
       <BlockContent body={post.body} />
+      <BackendTestButton />
     </Container>
   );
 };
