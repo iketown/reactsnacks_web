@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useBlockCtx } from "./BlockCtx";
 const WordsTrigger = ({ children, mark }) => {
-  const { setHighlightWords } = useBlockCtx();
+  const { setHighlightWords, highlightWords } = useBlockCtx();
   const { prismId, extraPrismIds } = mark;
   // console.log({ mark });
-
+  useEffect(() => {
+    console.log("highlightWords", highlightWords);
+  }, [highlightWords]);
   const prismIdToObj = (prismId: string) => {
     const [p, blockId, lineNumber, startWord, endWord] = prismId.split("__");
     return {
@@ -35,6 +37,8 @@ const WordsTrigger = ({ children, mark }) => {
     <a
       style={{ cursor: "pointer" }}
       onMouseOverCapture={handleTrigger}
+      onClick={handleTrigger}
+      onTouchStartCapture={handleTrigger}
       onMouseOutCapture={handleUnTrigger}
     >
       {children}
