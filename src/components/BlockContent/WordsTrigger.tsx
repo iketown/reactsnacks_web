@@ -36,15 +36,20 @@ const WordsTrigger = ({ children, mark }) => {
   const link = (
     <a
       style={{ cursor: "pointer" }}
-      onMouseOverCapture={handleTrigger}
+      onMouseOver={handleTrigger}
       onClick={handleTrigger}
       onTouchStartCapture={handleTrigger}
-      onMouseOutCapture={handleUnTrigger}
+      onMouseOut={handleUnTrigger}
     >
       {children}
     </a>
   );
-  return <span>{link}</span>;
+  return (
+    <span>
+      {link}
+      <span style={{ fontSize: "10px" }}>{JSON.stringify(prismId)}</span>
+    </span>
+  );
 };
 
 export default WordsTrigger;

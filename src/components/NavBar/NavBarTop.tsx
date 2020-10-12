@@ -18,7 +18,7 @@ const NavContent = styled.div`
 `;
 
 const NavBarTop: React.FC<{ openDrawer: () => void }> = ({ openDrawer }) => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const { screenSm, screenMd, screenLg } = useResponsive();
   return (
     <Segment inverted style={{ borderRadius: 0 }}>
@@ -29,7 +29,7 @@ const NavBarTop: React.FC<{ openDrawer: () => void }> = ({ openDrawer }) => {
               <Icon name="bars" />
             </Button>
           )}
-          <Link href="/">
+          <Link href="/" as="/">
             <a style={{ color: "white" }}>ReactSnacks</a>
           </Link>
         </div>
