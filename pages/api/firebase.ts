@@ -12,3 +12,5 @@ export const allBooks = async (req: NextApiRequest, res: NextApiResponse) => {
     })
     .catch((error) => res.json({ error }));
 };
+
+export default allBooks;
