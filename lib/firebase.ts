@@ -1,5 +1,5 @@
 import admin from "firebase-admin";
-
+import atob from "atob";
 interface GoogleCreds {
   auth_provider_x509_cert_url: string;
   auth_uri: string;
@@ -40,5 +40,6 @@ try {
     // eslint-disable-next-line no-console
     console.error("Firebase admin initialization error", error.stack);
   }
+  console.error("fb error", error);
 }
 export const firestore = admin.firestore();
