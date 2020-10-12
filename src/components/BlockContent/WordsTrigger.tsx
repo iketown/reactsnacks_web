@@ -16,8 +16,6 @@ const WordsTrigger = ({ children, mark }) => {
   };
 
   const handleTrigger = () => {
-    console.log({ prismId, extraPrismIds });
-    alert(prismId);
     if (prismId) {
       setHighlightWords([prismIdToObj(prismId)]);
       // return;
@@ -43,12 +41,7 @@ const WordsTrigger = ({ children, mark }) => {
       {children}
     </a>
   );
-  return (
-    <span>
-      {link}
-      <span style={{ fontSize: "10px" }}>{JSON.stringify(prismId)}</span>
-    </span>
-  );
+  return <span>{link}</span>;
 };
 
 export default WordsTrigger;

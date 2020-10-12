@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Button, Segment, Container, Icon } from "semantic-ui-react";
-import { useAuth } from "@contexts/auth/AuthCtx";
-import SignInOut from "./SignInOut";
 import Link from "next/link";
 import { useResponsive } from "@hooks/useResponsive";
 
@@ -37,7 +35,6 @@ const NavBarTop: React.FC<{ openDrawer: () => void }> = ({ openDrawer }) => {
           <Link href="/dashboard">
             <Icon size="big" name="user circle" />
           </Link>
-          <SignInOut />
         </div>
       </NavContent>
     </Segment>
