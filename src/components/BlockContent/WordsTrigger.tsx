@@ -19,6 +19,7 @@ const WordsTrigger = ({ children, mark }) => {
 
   const handleTrigger = () => {
     console.log({ prismId, extraPrismIds });
+    alert(prismId);
     if (prismId) {
       setHighlightWords([prismIdToObj(prismId)]);
       // return;
