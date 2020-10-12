@@ -4,10 +4,12 @@ import styled from "styled-components";
 
 import { BlockContextProvider } from "./BlockCtx";
 import Code from "./Code";
+import WordsTrigger from "./WordsTrigger";
 import PrismRenderer from "./PrismRenderer";
 import InlineCode from "./InlineCode";
 import Target from "./Target";
 import TargetCode from "./TargetCode";
+import LineTrigger from "./LineTrigger";
 import Trigger from "./Trigger";
 import IDTrigger from "./IDTrigger";
 import CodeSandbox from "./CodeSandbox";
@@ -51,8 +53,9 @@ const BlockRenderer = (props) => {
 const serializers = {
   marks: {
     inlineCode: InlineCode,
-    lineTrigger: Trigger,
+    lineTrigger: LineTrigger,
     idTrigger: IDTrigger,
+    wordsTrigger: WordsTrigger,
     target: Target,
     targetCode: TargetCode,
     // code: () => <div>im code</div>,

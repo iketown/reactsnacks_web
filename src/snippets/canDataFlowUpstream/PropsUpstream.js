@@ -6,12 +6,11 @@ const ParentComponent = () => {
     </div>
   );
 };
-
 const ChildButtons = () => {
   return (
     <div>
-      <button>blue</button>
-      <button>red</button>
+      <button onClick={/** ??? */}>blue</button>
+      <button onClick={/** ??? */}>red</button>
     </div>
   );
 };

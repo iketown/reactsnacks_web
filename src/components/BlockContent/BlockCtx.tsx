@@ -1,34 +1,34 @@
 import React, { createContext, useContext, useState } from "react";
 
-interface Highlight {
-  start: number;
-  end: number;
-  codeId: string;
-}
-interface BlockContextI {
-  highlight: Highlight;
-  setHighlight: React.Dispatch<React.SetStateAction<Highlight>>;
-  targetHighlight: string;
-  setTargetHighlight: React.Dispatch<React.SetStateAction<string>>;
-}
-
+const emptyHighlightWords = {
+  lineNumber: -1,
+  startWord: -1,
+  endWord: -1,
+  blockId: "",
+};
 const BlockContext = createContext<BlockContextI>({
-  highlight: { start: -1, end: -1, codeId: "" },
-  setHighlight: () => {},
-  targetHighlight: "",
-  setTargetHighlight: () => {},
+  highlightWords: null,
+  highlightLines: null,
+  setHighlightLines: () => {},
+  setHighlightWords: () => {},
 });
 
 export const BlockContextProvider: React.FC = ({ children }) => {
-  const [highlight, setHighlight] = useState<Highlight>({
-    start: -1,
-    end: -1,
-    codeId: "",
-  });
-  const [targetHighlight, setTargetHighlight] = useState<string>("target-1");
+  const [highlightWords, setHighlightWords] = useState<Highlight[] | null>(
+    null
+  );
+  const [highlightLines, setHighlightLines] = useState<HighlightLines | null>(
+    null
+  );
+
   return (
     <BlockContext.Provider
-      value={{ highlight, setHighlight, targetHighlight, setTargetHighlight }}
+      value={{
+        highlightWords,
+        setHighlightWords,
+        highlightLines,
+        setHighlightLines,
+      }}
       {...{ children }}
     />
   );
