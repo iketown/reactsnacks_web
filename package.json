@@ -21,6 +21,7 @@
     "groq": "1.150.1",
     "js-cookie": "2.2.1",
     "next": "latest",
+    "next-google-fonts": "1.2.1",
     "nookies": "2.4.0",
     "prism-react-renderer": "1.1.1",
     "prismjs": "1.21.0",

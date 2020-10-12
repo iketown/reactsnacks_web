@@ -19,7 +19,7 @@ const NavBarTop: React.FC<{ openDrawer: () => void }> = ({ openDrawer }) => {
   // const { user } = useAuth();
   const { screenSm, screenMd, screenLg } = useResponsive();
   return (
-    <Segment inverted style={{ borderRadius: 0 }}>
+    <Segment inverted style={{ borderRadius: 0, margin: 0 }}>
       <NavContent>
         <div className="leftSide">
           {(screenSm || screenMd) && (

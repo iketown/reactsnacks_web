@@ -55,7 +55,8 @@ const singlePostQ = groq`
   *[_type == 'post' && slug.current == $snackId ]{
   ...,
   "prerequisites": prerequisites[] -> {"slug": slug.current, title, _id},
-  "author": author -> {name, "slug": slug.current}
+  "author": author -> {name, "slug": slug.current},
+  "image": mainImage.asset -> {url}
   }
 `;
 export const getPostById = async (snackId: string) => {

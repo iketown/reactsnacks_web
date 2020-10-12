@@ -3,7 +3,6 @@ import styled from "styled-components";
 import copy from "copy-to-clipboard";
 import { Word } from "./PrismRendererLineStyles";
 import { borderStyle, backgroundColor } from "../../constants/codeHighlights";
-
 const Line = styled.div<{
   lineHL?: boolean;
   lineHLStart: boolean;
@@ -114,20 +113,21 @@ const PrismRendererLine: React.FC<PrismLineI> = ({
           const multiSelected = highlightWords && highlightWords.length > 1;
           // console.log({ multiSelected });
           return (
-            <Word
-              {...{
-                sel,
-                selStart,
-                selEnd,
-                multiSelected,
-              }}
-              onMouseDown={(e) =>
-                handleSelectStart(lineIndex + 1, wordIndex, e)
-              }
-              onMouseUp={(e) => handleSelectEnd(lineIndex + 1, wordIndex, e)}
-              key={wordIndex}
-              {...getTokenProps({ token, wordIndex })}
-            />
+            <span key={`${wordIndex}${myBlockId}`}>
+              <Word
+                {...{
+                  sel,
+                  selStart,
+                  selEnd,
+                  multiSelected,
+                }}
+                onMouseDown={(e) =>
+                  handleSelectStart(lineIndex + 1, wordIndex, e)
+                }
+                onMouseUp={(e) => handleSelectEnd(lineIndex + 1, wordIndex, e)}
+                {...getTokenProps({ token, wordIndex })}
+              />
+            </span>
           );
         })}
       </LineContent>
