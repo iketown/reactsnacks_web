@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-
-export default (req: NextApiRequest, res: NextApiResponse) => {
+import atob from "atob";
+export const googs = (req: NextApiRequest, res: NextApiResponse) => {
   const gCreds = process.env.GCLOUD_CREDENTIALS;
-  res.send(gCreds);
+  res.json({ gCreds });
 };
+
+export default googs;
