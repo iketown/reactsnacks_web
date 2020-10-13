@@ -27,7 +27,7 @@ const HeaderWithTitle = styled.div<{ url: string }>`
 `;
 const SnackPage = ({ post }) => {
   const { _updatedAt, author, prerequisites } = post;
-  console.log("post", post);
+  const clientSide = typeof window !== "undefined";
   return (
     <>
       <HeaderWithTitle url={`${post.image.url}`}>
@@ -50,7 +50,9 @@ const SnackPage = ({ post }) => {
         </Grid>
         <Divider />
         <BlockContent body={post.body} />
-        <SnackButton postId={post._id} snackSlug={post.slug.current} />
+        {clientSide && (
+          <SnackButton postId={post._id} snackSlug={post.slug.current} />
+        )}
       </Container>
     </>
   );
