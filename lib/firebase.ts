@@ -23,7 +23,7 @@ export const getGoogleCreds = (): GoogleCreds => {
   if (process.env.NODE_ENV === "development") {
     gCreds = require(`../../reactsnax-vercelkey.json`);
   }
-  const databaseURL = process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL;
+  const databaseURL = process.env.NEXT_PUBLIC_FB_DATABASE_URL;
   return { ...gCreds, databaseURL };
 };
 
