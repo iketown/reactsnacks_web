@@ -4,7 +4,7 @@ import { useAuth } from "@contexts/auth/AuthCtx";
 const Dashboard = () => {
   const { user } = useAuth();
   if (!user) return <FirebaseAuth />;
-  return <div>you're in</div>;
+  return <div>you're in. dashboard goes here.</div>;
 };
 
 export default Dashboard;
