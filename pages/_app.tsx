@@ -6,7 +6,7 @@ import "semantic-ui-css/semantic.min.css";
 import "prismjs/themes/prism-tomorrow.css";
 import "../styles/darcula.css";
 import Layout from "../src/components/layout/Layout";
-
+import { AuthProvider } from "../src/contexts/auth/AuthCtx";
 export const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
   return (
     <Layout>
@@ -16,7 +16,9 @@ export const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
       </NextHead>
       <GoogleFonts href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" />
-      <Component {...pageProps} />
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
     </Layout>
   );
 };

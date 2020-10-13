@@ -26,6 +26,8 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [signInModalOpen, setSignInModalOpen] = useState(false);
 
   useEffect(() => {
+    console.log("running auth effect");
+
     return firebase.auth().onIdTokenChanged(async (user) => {
       if (!user) {
         setUser(null);

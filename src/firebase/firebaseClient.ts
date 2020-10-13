@@ -2,7 +2,6 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
-let db = null;
 if (typeof window !== "undefined" && !firebase.apps.length) {
   firebase.initializeApp({
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
@@ -14,6 +13,7 @@ if (typeof window !== "undefined" && !firebase.apps.length) {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   });
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-  db = firebase.firestore();
+  // db = firebase.firestore();
 }
-export { firebase, db };
+
+export { firebase };

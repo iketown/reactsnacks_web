@@ -1,14 +1,17 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { firestore } from "../../lib/firebase";
+import { firebaseAdmin } from "../../lib/firebase";
+import nookies from "nookies";
 
 export const allBooks = async (req: NextApiRequest, res: NextApiResponse) => {
-  firestore
+  const { token } = req.cookies;
+  firebaseAdmin
+    .firestore()
     .collection("books")
     .get()
     .then((docs) => {
       const books = [];
       docs.forEach((doc) => books.push(doc.data()));
-      res.json(books);
+      res.json({ ...books, token });
     })
     .catch((error) => res.json({ error }));
 };

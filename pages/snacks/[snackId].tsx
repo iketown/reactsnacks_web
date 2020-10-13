@@ -4,7 +4,7 @@ import React from "react";
 import { Container, Grid, Divider, Image } from "semantic-ui-react";
 import SnackMeta from "@components/Snacks/SnackMeta";
 import { motion } from "framer-motion";
-import BackendTestButton from "@components/BlogButtons/BackendTestButton";
+import SnackButton from "@components/BlogButtons/SnackButton";
 import styled from "styled-components";
 
 const HeaderWithTitle = styled.div<{ url: string }>`
@@ -50,7 +50,7 @@ const SnackPage = ({ post }) => {
         </Grid>
         <Divider />
         <BlockContent body={post.body} />
-        <BackendTestButton />
+        <SnackButton postId={post._id} snackSlug={post.slug.current} />
       </Container>
     </>
   );
