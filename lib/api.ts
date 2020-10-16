@@ -5,6 +5,7 @@ const postListQ = groq`*[_type == "post"]{
   "slug": slug.current,
   "authorInfo": author->{name, "slug": slug.current},
 	"image": mainImage.asset -> url,
+  "snackImage": snackImage.asset -> {url},
   "categories": categories[] -> {
   	title,
     "slug": slug.current
@@ -27,6 +28,7 @@ const categorizedPostsQ = groq`
   "slug": slug.current,
   "authorInfo": author->{name, "slug": slug.current},
 	"image": mainImage.asset -> url,
+  "snackImage": snackImage.asset -> {url},
   "categories": categories[] -> {
   	title,
     "slug": slug.current
@@ -56,7 +58,8 @@ const singlePostQ = groq`
   ...,
   "prerequisites": prerequisites[] -> {"slug": slug.current, title, _id},
   "author": author -> {name, "slug": slug.current},
-  "image": mainImage.asset -> {url}
+  "image": mainImage.asset -> {url},
+  "snackImage": snackImage.asset -> {url}
   }
 `;
 export const getPostById = async (snackId: string) => {

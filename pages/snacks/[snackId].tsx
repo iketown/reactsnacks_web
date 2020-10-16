@@ -8,8 +8,10 @@ import SnackButton from "@components/BlogButtons/SnackButton";
 import styled from "styled-components";
 
 const HeaderWithTitle = styled.div<{ url: string }>`
-  background-image: url(${(p) => p.url});
-  height: 50vh;
+  background-image: linear-gradient(to top, black, #ffffff00),
+    url(${(p) => p.url});
+  height: 30vh;
+  min-height: 100px;
   color: white;
   display: flex;
   padding: 0 2rem;
@@ -24,14 +26,25 @@ const HeaderWithTitle = styled.div<{ url: string }>`
     font-family: Oswald, sans-serif;
     text-shadow: 2px 2px 5px #00000099;
   }
+  .snackImage {
+    position: relative;
+    bottom: -2rem;
+  }
 `;
 const SnackPage = ({ post }) => {
+  console.log({ post });
   const { _updatedAt, author, prerequisites } = post;
   const clientSide = typeof window !== "undefined";
   return (
     <>
       <HeaderWithTitle url={`${post.image.url}`}>
-        <Container>
+        <Container
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+          }}
+        >
           <motion.h1
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 0.8 } }}
@@ -39,6 +52,9 @@ const SnackPage = ({ post }) => {
           >
             {post.title}
           </motion.h1>
+          <div className="snackImage">
+            <Image size="small" src={post.snackImage.url} />
+          </div>
         </Container>
       </HeaderWithTitle>
       <Container>

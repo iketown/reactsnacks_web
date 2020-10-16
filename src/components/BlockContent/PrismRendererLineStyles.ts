@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { borderStyle, backgroundColor } from "../../constants/codeHighlights";
-const selPad = "5px";
+const selPad = "3px";
 
+const blackBorder = "1px solid orange";
 const selStart = `
   border-left: ${borderStyle};
 `;

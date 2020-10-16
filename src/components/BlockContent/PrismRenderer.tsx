@@ -24,7 +24,8 @@ const PrismRenderer = ({ children, node }) => {
     id,
   } = node;
   const { highlightWords, highlightLines } = useBlockCtx();
-
+  const wordsActive = !!highlightWords?.find((word) => word.blockId === id);
+  const linesActive = highlightLines?.blockId === id;
   return (
     <>
       <CodeContainer>
@@ -32,7 +33,7 @@ const PrismRenderer = ({ children, node }) => {
           {({ className, style, tokens, getLineProps, getTokenProps }) => {
             return (
               <Pre
-                highlightActive={!!highlightWords}
+                highlightActive={wordsActive || linesActive}
                 className={className}
                 style={style}
               >

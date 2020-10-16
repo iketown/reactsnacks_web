@@ -1,6 +1,7 @@
-import nookies from "nookies";
-import { createContext, useContext, useState, useEffect } from "react";
 import { firebase } from "@firebase/firebaseClient";
+import { setCookie } from "nookies";
+import { createContext, useContext, useEffect, useState } from "react";
+
 // ...
 
 interface AuthContextI {
@@ -26,25 +27,32 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [signInModalOpen, setSignInModalOpen] = useState(false);
 
   useEffect(() => {
-    console.log("running auth effect");
-
     return firebase.auth().onIdTokenChanged(async (user) => {
       if (!user) {
         setUser(null);
-        nookies.set(undefined, "token", "", {});
+        setCookie(null, "token", "", {});
         return;
       }
 
-      const token = await user.getIdToken();
+      const token = await user.getIdToken(true);
       setUser(user);
-      nookies.set(undefined, "token", token, {});
+      setCookie(null, "token", token, {});
     });
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      if (user) {
+        const token = await user.getIdToken(true);
+        setCookie(null, "token", token, {});
+      }
+    }, 1000 * 60 * 10 /** 10 minutes */);
+    return () => clearInterval(interval);
+  }, []);
+
   const signOut = () => {
-    console.log("signing out");
     firebase.auth().signOut();
-    nookies.destroy(undefined, "token");
+    setCookie(null, "token", "", {});
   };
 
   return (

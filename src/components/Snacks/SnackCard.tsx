@@ -7,7 +7,16 @@ import {
   AccordionPanelProps,
 } from "semantic-ui-react";
 import Link from "next/link";
+import styled from "styled-components";
 
+const StyledDiv = styled.div`
+  cursor: pointer;
+  display: inline-block;
+  :hover {
+    transform: scale(1.05);
+  }
+  transition: 0.3s all;
+`;
 const SnackCard: React.FC<{ post: PostInfo }> = ({ post }) => {
   const link = `/snacks/${post.slug}`;
   const panels: SemanticShorthandCollection<AccordionPanelProps> = [
@@ -18,19 +27,11 @@ const SnackCard: React.FC<{ post: PostInfo }> = ({ post }) => {
     },
   ];
   return (
-    <div>
-      <div>
-        <Segment>
-          <Link href="/snacks/[snackId]" as={link}>
-            <a>
-              <h4>{post.title}</h4>
-              <Image src={`${post.image}?h=200`} />
-            </a>
-          </Link>
-          <Accordion panels={panels}></Accordion>
-        </Segment>
-      </div>
-    </div>
+    <Link href="/snacks/[snackId]" as={link}>
+      <StyledDiv>
+        <Image size="small" src={`${post.snackImage?.url}?w=200`} />
+      </StyledDiv>
+    </Link>
   );
 };
 

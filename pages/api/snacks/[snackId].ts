@@ -1,10 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { firebaseAdmin } from "lib/firebase";
+import { parseCookies } from "nookies";
 
 const snackActions = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { token } = req.cookies;
+  // const { token } = req.cookies;
+  const { token } = parseCookies({ req });
   const { method } = req;
   const snackId = (req.query.snackId as string) || "";
+  console.log({ token });
   const { uid } = await firebaseAdmin.auth().verifyIdToken(token);
   const update = req.body?.update;
   if (!uid || !snackId) res.json({ message: "nope" });

@@ -11,11 +11,14 @@ const Line = styled.div<{
   display: grid;
   grid-template-columns: 22px 1fr;
   grid-template-rows: max-content;
+  border: 1px #00000000 solid; // so adding borders isnt jumpy
+  margin: -1px;
   background: ${(p) => (p.lineHL ? backgroundColor : "")};
   border-top: ${(p) => (p.lineHLStart ? borderStyle : "")};
   border-bottom: ${(p) => (p.lineHLEnd ? borderStyle : "")};
   border-left: ${(p) => (p.lineHL ? borderStyle : "")};
   border-right: ${(p) => (p.lineHL ? borderStyle : "")};
+  box-sizing: border-box;
   transition: 0.5s all;
 `;
 const LineNo = styled.span`
@@ -53,7 +56,6 @@ const PrismRendererLine: React.FC<PrismLineI> = ({
 }) => {
   const [startWord, setStartWord] = useState<number>(-1);
   const isDevelopment = process.env.NODE_ENV === "development";
-
   const handleSelectStart = (line: number, word: number, e: any) => {
     if (!isDevelopment) return;
     setStartWord(word);
@@ -68,6 +70,7 @@ const PrismRendererLine: React.FC<PrismLineI> = ({
     setStartWord(-1);
   };
   const handleClickLine = (line: number) => {
+    if (!isDevelopment) return;
     const prismCode = `prismline__${myBlockId}__${line}`;
     copy(prismCode);
     console.log({ prismCode });
@@ -99,7 +102,6 @@ const PrismRendererLine: React.FC<PrismLineI> = ({
           let selStart = false;
           let selEnd = false;
           let sel = false;
-          let unselected = false;
           if (highlightWords) {
             for (let hl of highlightWords) {
               const { lineNumber, startWord, endWord, blockId } = hl;

@@ -14,6 +14,18 @@ const StyledBlock = styled.div`
   p {
     font-size: 1.2rem;
   }
+  h4 {
+    color: #00000066;
+    text-align: right;
+    font-family: Oswald, sans-serif;
+    font-weight: 200;
+    font-size: 2rem;
+    ::after {
+      content: "";
+      border-bottom: 1px solid #00000044;
+      display: block;
+    }
+  }
   .inline-code {
     color: #2a118b;
     background: #dbdbdb6e;

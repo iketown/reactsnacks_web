@@ -15,7 +15,7 @@ export const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
       </NextHead>
-      <GoogleFonts href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" />
+      <GoogleFonts href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;500&display=swap" />
       <AuthProvider>
         <Component {...pageProps} />
       </AuthProvider>
