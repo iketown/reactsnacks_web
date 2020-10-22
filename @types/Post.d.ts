@@ -16,3 +16,18 @@ interface PostCategory {
   title: string;
   posts?: PostInfo[];
 }
+
+interface SnackPost {
+  author: {name:string; slug: string};
+  prerequisites: any[];
+  body: any;
+  categories: any[];
+  image: {url:string};
+  slug: {current:string;};
+  snackImage: {url:string};
+  title: string;
+  finalText?:string;
+  _createdAt:string;
+  _updatedAt:string;
+  _id:string;
+}

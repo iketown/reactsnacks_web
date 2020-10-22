@@ -1,16 +1,12 @@
-import SnackList from "@components/Snacks/SnackList";
-import { getCategorizedPosts, getPostsList } from "lib/api";
-import { Container, Header, Icon, Segment } from "semantic-ui-react";
-import CurvesColor from "@components/curves/CurvesColor";
-import HeaderCurves from "@components/curves/HeaderCurves";
-import FlexCurve from "@components/curves/FlexCurve";
-import { reds } from "@constants/colors";
-// import { useUser } from '../utils/auth/useUser'
 import AnimatedReactLogo from "@components/animated/AnimatedReactLogo";
+import FlexCurve from "@components/curves/FlexCurve";
+import SnackList from "@components/Snacks/SnackList";
+import { blues, reds } from "@constants/colors";
+import { getCategorizedPosts, getPostsList } from "lib/api";
+import { Container, Header, Segment } from "semantic-ui-react";
 import styled from "styled-components";
-import { blues } from "@constants/colors";
-import TitleWave from "@components/layout/TitleWave";
-import ReactPart from "@components/animated/ReactPart";
+
+// import { useUser } from '../utils/auth/useUser'
 const STitle = styled.div`
   .react,
   .snacks {
@@ -29,6 +25,38 @@ const STitle = styled.div`
   }
 `;
 
+const StyledHeader = styled(Header)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0 0;
+  position: relative;
+`;
+
+export const StyledSegment = styled(Segment)`
+  /* background-position: bottom; */
+  position: relative !important;
+  ::before {
+    background-image: url("images/circlerow.svg") !important;
+    background-size: 30px !important;
+    background-attachment: fixed !important;
+    background-position: center !important;
+    background-repeat: repeat-x !important;
+    position: absolute;
+    content: "";
+    top: calc(100% - 6rem);
+    border: 1px solid ${blues[0]};
+    left: 0;
+    height: 13rem;
+    width: 100%;
+    background: ${blues[0]};
+    /* background: red; */
+    transform: skewY(2deg) translateY(-50%);
+    /* z-index: -1; */
+  }
+`;
+
 const Index: React.FC<{ categorizedPosts: PostCategory[] }> = ({
   categorizedPosts,
 }) => {
@@ -36,28 +64,18 @@ const Index: React.FC<{ categorizedPosts: PostCategory[] }> = ({
 
   return (
     <>
-      <Segment
+      <StyledSegment
         style={{
           border: 0,
           borderRadius: 0,
           margin: `0`,
           position: "relative",
           background: blues[0],
-          overflow: "hidden",
+          // overflow: "hidden",
         }}
         inverted
       >
-        <Header
-          textAlign="center"
-          inverted
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "2rem",
-          }}
-        >
+        <StyledHeader textAlign="center" inverted style={{}}>
           <STitle>
             <div>
               <span className="react">REACT</span>
@@ -67,19 +85,18 @@ const Index: React.FC<{ categorizedPosts: PostCategory[] }> = ({
               snack-sized <b>ReactJS</b> concepts
             </div>
           </STitle>
-        </Header>
+        </StyledHeader>
         <div
           style={{
             display: "flex",
-            justifyContent: "space-around",
+            justifyContent: "center",
           }}
         >
           <AnimatedReactLogo />
         </div>
-        <TitleWave />
-      </Segment>
+        {/* <TitleWave /> */}
+      </StyledSegment>
       <FlexCurve />
-
       <Container>
         {categorizedPosts.map((catPosts) => {
           if (!catPosts?.posts?.length) return null;

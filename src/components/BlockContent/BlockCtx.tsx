@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 const emptyHighlightWords = {
   lineNumber: -1,
@@ -11,16 +11,24 @@ const BlockContext = createContext<BlockContextI>({
   highlightLines: null,
   setHighlightLines: () => {},
   setHighlightWords: () => {},
+  //@ts-ignore
+  post: {},
 });
 
-export const BlockContextProvider: React.FC = ({ children }) => {
+export const BlockContextProvider: React.FC<{ post: any }> = ({
+  children,
+  post: _post,
+}) => {
   const [highlightWords, setHighlightWords] = useState<Highlight[] | null>(
     null
   );
   const [highlightLines, setHighlightLines] = useState<HighlightLines | null>(
     null
   );
-
+  const [post, setPost] = useState(_post);
+  useEffect(() => {
+    if (_post) setPost(_post);
+  }, [_post]);
   return (
     <BlockContext.Provider
       value={{
@@ -28,6 +36,7 @@ export const BlockContextProvider: React.FC = ({ children }) => {
         setHighlightWords,
         highlightLines,
         setHighlightLines,
+        post,
       }}
       {...{ children }}
     />

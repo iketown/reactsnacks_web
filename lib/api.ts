@@ -59,6 +59,7 @@ const singlePostQ = groq`
   "prerequisites": prerequisites[] -> {"slug": slug.current, title, _id},
   "author": author -> {name, "slug": slug.current},
   "image": mainImage.asset -> {url},
+  "body": body[]{..., 'image': image {..., 'asset': asset -> {url}} },
   "snackImage": snackImage.asset -> {url}
   }
 `;

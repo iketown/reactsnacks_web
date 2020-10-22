@@ -8,7 +8,15 @@ import { firebase } from "../firebase/firebaseClient";
 // Init the Firebase app.
 // initFirebase();
 
-const FirebaseAuth = () => {
+interface FirebaseAuthI {
+  forwardToHref?: string;
+  forwardToAs?: string;
+}
+
+const FirebaseAuth: React.FC<FirebaseAuthI> = ({
+  forwardToHref,
+  forwardToAs,
+}) => {
   const [renderAuth, setRenderAuth] = useState(false);
   const { user, setSignInModalOpen } = useAuth();
   const router = useRouter();
@@ -36,7 +44,9 @@ const FirebaseAuth = () => {
         console.log("signin success", { user, redirectUrl });
         setSignInModalOpen(false);
         // go wherever they were trying to go
-        router.push("/dashboard");
+        if (forwardToHref) {
+          router.push(forwardToHref, forwardToAs);
+        }
         return false;
       },
     },

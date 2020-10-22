@@ -9,7 +9,8 @@ import LineTrigger from "./LineTrigger";
 import PrismRenderer from "./PrismRenderer";
 import TargetCode from "./TargetCode";
 import WordsTrigger from "./WordsTrigger";
-
+import FinalBlock from "./FinalBlock";
+import InlineImage from "./InlineImage";
 const StyledBlock = styled.div`
   p {
     font-size: 1.2rem;
@@ -19,7 +20,7 @@ const StyledBlock = styled.div`
     text-align: right;
     font-family: Oswald, sans-serif;
     font-weight: 200;
-    font-size: 2rem;
+    font-size: 24px;
     ::after {
       content: "";
       border-bottom: 1px solid #00000044;
@@ -38,17 +39,22 @@ const serializers = {
     lineTrigger: LineTrigger,
     wordsTrigger: WordsTrigger,
     targetCode: TargetCode,
-    // code: () => <div>im code</div>,
+    final: FinalBlock,
+    cleared: () => <div style={{ clear: "both" }} />,
   },
   types: {
     codeWithId: PrismRenderer,
     codeSandbox: CodeSandbox,
+    inlineImage: InlineImage,
   },
 };
 
-const ReactBlockContent = ({ body }) => {
+const ReactBlockContent: React.FC<{ body: any; post: SnackPost }> = ({
+  body,
+  post,
+}) => {
   return (
-    <BlockContextProvider>
+    <BlockContextProvider {...{ post }}>
       <StyledBlock>
         <BlockContent blocks={body} serializers={serializers} />
       </StyledBlock>

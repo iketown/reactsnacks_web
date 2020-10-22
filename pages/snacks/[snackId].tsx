@@ -6,6 +6,7 @@ import SnackMeta from "@components/Snacks/SnackMeta";
 import { motion } from "framer-motion";
 import SnackButton from "@components/BlogButtons/SnackButton";
 import styled from "styled-components";
+import FinalBlock from "@components/BlockContent/FinalBlock";
 
 const HeaderWithTitle = styled.div<{ url: string }>`
   background-image: linear-gradient(to top, black, #ffffff00),
@@ -31,13 +32,13 @@ const HeaderWithTitle = styled.div<{ url: string }>`
     bottom: -2rem;
   }
 `;
-const SnackPage = ({ post }) => {
-  console.log({ post });
+const SnackPage: React.FC<{ post: SnackPost }> = ({ post }) => {
   const { _updatedAt, author, prerequisites } = post;
+  console.log("snack page post", post);
   const clientSide = typeof window !== "undefined";
   return (
     <>
-      <HeaderWithTitle url={`${post.image.url}`}>
+      <HeaderWithTitle url={`${post.image?.url}`}>
         <Container
           style={{
             display: "flex",
@@ -53,7 +54,7 @@ const SnackPage = ({ post }) => {
             {post.title}
           </motion.h1>
           <div className="snackImage">
-            <Image size="small" src={post.snackImage.url} />
+            <Image size="small" src={post.snackImage?.url} />
           </div>
         </Container>
       </HeaderWithTitle>
@@ -65,10 +66,8 @@ const SnackPage = ({ post }) => {
           </Grid.Column>
         </Grid>
         <Divider />
-        <BlockContent body={post.body} />
-        {clientSide && (
-          <SnackButton postId={post._id} snackSlug={post.slug.current} />
-        )}
+        <BlockContent key={post._id} post={post} body={post.body} />
+        <FinalBlock {...{ post }} />
       </Container>
     </>
   );

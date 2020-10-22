@@ -1,14 +1,13 @@
-import React from "react";
-import styled from "styled-components";
-import { Button, Segment, Container, Icon } from "semantic-ui-react";
-import Link from "next/link";
-import { useResponsive } from "@hooks/useResponsive";
 import { blues } from "@constants/colors";
-import TitleWave from "@components/layout/TitleWave";
-
-const clipPathString =
-  "M0.5,1 C0.5,1,0,0.7,0,0.3 A0.25,0.25,1,1,1,0.5,0.3 A0.25,0.25,1,1,1,1,0.3 C1,0.7,0.5,1,0.5,1 Z";
-
+import { useResponsive } from "@hooks/useResponsive";
+import Link from "next/link";
+import React from "react";
+import { Icon, Segment, Dropdown, Button } from "semantic-ui-react";
+import styled from "styled-components";
+import { useAuth } from "@contexts/auth/AuthCtx";
+import { useUserCtx } from "@contexts/userInfo/UserCtx";
+import { useRouter } from "next/router";
+import SignInModal from "./SignInModal";
 const NavContent = styled.div`
   display: flex;
   justify-content: space-between;
@@ -36,8 +35,16 @@ const STitle = styled.div`
 `;
 
 const NavBarTop: React.FC<{ openDrawer: () => void }> = ({ openDrawer }) => {
-  // const { user } = useAuth();
+  const { user, signOut, setSignInModalOpen } = useAuth();
+  const { userProfile } = useUserCtx();
   const { screenSm, screenMd, screenLg } = useResponsive();
+  const { push } = useRouter();
+  const handleSignOut = () => {
+    signOut();
+    push("/", "/");
+  };
+  const displayName =
+    userProfile?.username || user?.displayName || user?.email || "";
   return (
     <>
       <Segment
@@ -46,7 +53,7 @@ const NavBarTop: React.FC<{ openDrawer: () => void }> = ({ openDrawer }) => {
           borderRadius: 0,
           margin: 0,
           backgroundColor: blues[0],
-          // position: "relative",
+          position: "relative",
         }}
       >
         <NavContent>
@@ -68,12 +75,37 @@ const NavBarTop: React.FC<{ openDrawer: () => void }> = ({ openDrawer }) => {
             </Link>
           </div>
           <div className="rightSide">
-            <Link href="/dashboard">
+            {user ? (
+              <Dropdown floating text={displayName}>
+                <Dropdown.Menu direction="left">
+                  <Link href="/dashboard" as="/dashboard">
+                    <Dropdown.Item>Dashboard</Dropdown.Item>
+                  </Link>
+                  <Link href="/profile" as="/profile">
+                    <Dropdown.Item>Profile</Dropdown.Item>
+                  </Link>
+                  <Dropdown.Item onClick={handleSignOut}>
+                    Sign Out
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            ) : (
+              <Button
+                onClick={() => setSignInModalOpen(true)}
+                inverted
+                size="tiny"
+                basic
+              >
+                Sign in
+              </Button>
+            )}
+            {/* <Link href="/dashboard">
               <Icon size="big" name="user circle" />
-            </Link>
+            </Link> */}
           </div>
         </NavContent>
       </Segment>
+      <SignInModal />
     </>
   );
 };

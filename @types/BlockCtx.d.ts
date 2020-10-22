@@ -9,6 +9,7 @@ interface BlockContextI {
   highlightLines: HighlightLines | null;
   setHighlightLines: React.Dispatch<React.SetStateAction<HighlightLines>>;
   setHighlightWords: React.Dispatch<React.SetStateAction<Highlight[]>>;
+  post: SnackPost;
 }
 
 interface HighlightLines {

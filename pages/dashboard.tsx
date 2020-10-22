@@ -1,27 +1,26 @@
 import FirebaseAuth from "@components/FirebaseAuth";
 import SnackCard from "@components/Snacks/SnackCard";
+import UserProfile from "@components/UserProfile/UserProfile";
 import { useAuth } from "@contexts/auth/AuthCtx";
+import { useUserCtx } from "@contexts/userInfo/UserCtx";
 import axios from "axios";
 import { AnimateSharedLayout, motion } from "framer-motion";
 import { getCategorizedPosts, getPostsList } from "lib/api";
 import moment from "moment";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { Container, List } from "semantic-ui-react";
+import { Container, Header, List } from "semantic-ui-react";
 import styled from "styled-components";
-import useSWR from "swr";
 
 const SnackGrid = styled.div`
   display: grid;
   align-items: center;
   justify-content: center;
   justify-items: center;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   grid-gap: 1rem;
   transition: 0.3s all;
 `;
-
-const axiosFetcher = (url) => axios.get(url).then(({ data }) => data);
 
 interface DashboardI {
   allPosts: PostInfo[];
@@ -30,12 +29,8 @@ interface DashboardI {
 const Dashboard: React.FC<DashboardI> = ({ allPosts, categorizedPosts }) => {
   const [orderedPosts, setOrderedPosts] = useState(allPosts);
 
-  const { user } = useAuth();
-  const dashboardUrl = `/api/dashboard`;
-  const { data: mySnacks, error } = useSWR<PostInfo[]>(
-    dashboardUrl,
-    axiosFetcher
-  );
+  const { user, signOut } = useAuth();
+  const { userProfile, mySnacks } = useUserCtx();
 
   useEffect(() => {
     if (mySnacks) {
@@ -50,17 +45,17 @@ const Dashboard: React.FC<DashboardI> = ({ allPosts, categorizedPosts }) => {
     }
   }, [mySnacks]);
   if (!user) return <FirebaseAuth />;
-
   return (
     <Container>
+      <Header style={{ marginTop: "2rem" }} size="medium">
+        Recommended Snacks
+      </Header>
       <SnackGrid>
         <AnimateSharedLayout>
           {orderedPosts.map((post) => {
             const completedAt =
               mySnacks && mySnacks[post._id] && mySnacks[post._id].completed;
-            const finishedText = completedAt
-              ? moment(completedAt).fromNow()
-              : "not yet";
+            if (completedAt) return null;
             return (
               <motion.div layout layoutId={post._id} key={post._id}>
                 <SnackCard post={post} />
@@ -69,33 +64,40 @@ const Dashboard: React.FC<DashboardI> = ({ allPosts, categorizedPosts }) => {
           })}
         </AnimateSharedLayout>
       </SnackGrid>
-      <List>
-        {orderedPosts.map((post) => {
-          const completedAt =
-            mySnacks && mySnacks[post._id] && mySnacks[post._id].completed;
-          const finishedText = completedAt
-            ? moment(completedAt).fromNow()
-            : "not yet";
-          return (
-            <Link
-              href="/snacks/[snackId]"
-              as={`/snacks/${post.slug}`}
-              key={post._id}
-            >
-              <List.Item>
-                <List.Icon
-                  name={completedAt ? "check square outline" : "square outline"}
-                  verticalAlign="middle"
-                />
-                <List.Content>
-                  <List.Header>{post.title}</List.Header>
-                  <List.Description>{finishedText}</List.Description>
-                </List.Content>
-              </List.Item>
-            </Link>
-          );
-        })}
+      <List celled>
+        <Header size="medium">Completed Snacks</Header>
+        {mySnacks &&
+          Object.entries(mySnacks).map(([id, snack]) => {
+            const completedAt = snack.completed;
+            if (!completedAt) return null;
+            const finishedText = moment(completedAt).fromNow();
+            const post = allPosts.find((p) => p._id === id);
+            if (!post) return null;
+            return (
+              <Link
+                href="/snacks/[snackId]"
+                as={`/snacks/${post.slug}`}
+                key={post.slug}
+              >
+                <List.Item>
+                  <List.Icon
+                    name={
+                      completedAt ? "check square outline" : "square outline"
+                    }
+                    verticalAlign="middle"
+                  />
+                  <List.Content>
+                    <a>
+                      <List.Header>{post.title}</List.Header>
+                    </a>
+                    <List.Description>{finishedText}</List.Description>
+                  </List.Content>
+                </List.Item>
+              </Link>
+            );
+          })}
       </List>
+      {user ? <UserProfile /> : <div>not signed in</div>}
     </Container>
   );
 };
